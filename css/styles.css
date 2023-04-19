@@ -65,9 +65,10 @@ section {
 
 /* Navigation Styles*/
 .navbar__menu ul {
+    display:flex;
     padding-left: 0;
     margin: 0;
-    text-align: right;
+    justify-content: right;
 }
 
 .navbar__menu li {

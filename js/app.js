@@ -22,13 +22,22 @@
  * Define Global Variables
  * 
 */
-
+const sections = document.querySelectorAll('section');
+const navMenu = document.querySelector('#navbar__list');
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */
+sections.forEach((section) => {
+  const navItem = document.createElement('li');
+  navItem.innerHTML = section.getAttribute('data-nav');
+  navItem.classList.add('menu__link');
+  navMenu.appendChild(navItem);
+});
+
+
 
 
 
