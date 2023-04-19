@@ -30,14 +30,6 @@ const navMenu = document.querySelector('#navbar__list');
  * Start Helper Functions
  * 
 */
-sections.forEach((section) => {
-  const navItem = document.createElement('li');
-  navItem.innerHTML = section.getAttribute('data-nav');
-  navItem.classList.add('menu__link');
-  navMenu.appendChild(navItem);
-});
-
-
 
 
 
@@ -48,7 +40,12 @@ sections.forEach((section) => {
 */
 
 // build the nav
-
+sections.forEach((section) => {
+  const navItem = document.createElement('li');
+  navItem.innerHTML = section.getAttribute('data-nav');
+  navItem.classList.add('menu__link');
+  navMenu.appendChild(navItem);
+});
 
 // Add class 'active' to section when near top of viewport
 
