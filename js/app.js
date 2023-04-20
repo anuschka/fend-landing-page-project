@@ -24,6 +24,9 @@
 */
 const sections = document.querySelectorAll('section');
 const navMenu = document.querySelector('#navbar__list');
+const options = {
+  threshold: 0.5
+};
 
 /**
  * End Global Variables
@@ -40,6 +43,7 @@ const navMenu = document.querySelector('#navbar__list');
 */
 
 // build the nav
+// TODO: think about performance when adding new elements to the DOM
 sections.forEach((section) => {
   const navItem = document.createElement('li');
   navItem.innerHTML = section.getAttribute('data-nav');
@@ -48,6 +52,22 @@ sections.forEach((section) => {
 });
 
 // Add class 'active' to section when near top of viewport
+
+const callback = (entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-active');
+    } else {
+      entry.target.classList.remove('is-active');
+    }
+  });
+};
+
+const observer = new IntersectionObserver(callback, options);
+
+sections.forEach(section => {
+  observer.observe(section);
+});
 
 
 // Scroll to anchor ID using scrollTO event
