@@ -27,6 +27,7 @@ const navMenu = document.querySelector('#navbar__list');
 const options = {
   threshold: 0.5
 };
+let counter = 0;
 
 /**
  * End Global Variables
@@ -45,9 +46,11 @@ const options = {
 // build the nav
 // TODO: think about performance when adding new elements to the DOM
 sections.forEach((section) => {
+    counter ++;
   const navItem = document.createElement('li');
   navItem.innerHTML = section.getAttribute('data-nav');
   navItem.classList.add('menu__link');
+  navItem.setAttribute('data-section-id', `section${counter}`);
   navMenu.appendChild(navItem);
 });
 
@@ -71,6 +74,22 @@ sections.forEach(section => {
 
 
 // Scroll to anchor ID using scrollTO event
+
+// Step 1: Listen for click events on the navigation menu items
+const menuItems = document.querySelectorAll('.menu__link');
+menuItems.forEach(item => {
+  item.addEventListener('click', event => {
+    // Step 2: Prevent the default link behavior
+    event.preventDefault();
+
+    // Step 3: Get the ID of the section to scroll to
+    const sectionId = item.getAttribute('data-section-id');
+
+    // Step 4: Scroll to the section
+    const section = document.getElementById(sectionId);
+    section.scrollIntoView({ behavior: 'smooth' });
+  });
+});
 
 
 /**
