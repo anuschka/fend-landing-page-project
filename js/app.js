@@ -105,4 +105,23 @@ menuItems.forEach(item => {
 
 // Set sections as active
 
+// Add class 'active' to section when it is near top of viewport
+function makeActive() {
+  for (const section of sections) {
+    const box = section.getBoundingClientRect();
+    // You can play with the values in the "if" condition to further make it more accurate.
+    if (box.top <= 150 && box.bottom >= 150) {
+      // Apply active state on the current section and the corresponding Nav link.
+      const sectionId = section.getAttribute('id');
+      const navElement = document.querySelector(`[data-section-id="${sectionId}"]`);
+      navElement.classList.add('is-active');
+    } else {
+      // Remove active state from other section and corresponding Nav link.
+    }
+  }
+}
 
+// Make sections active
+document.addEventListener("scroll", function() {
+  makeActive();
+});
