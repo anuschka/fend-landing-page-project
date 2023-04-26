@@ -117,12 +117,12 @@ function makeActive() {
       // Apply active state on the current section and the corresponding Nav link.
       sectionId = section.getAttribute('id');
          navLinks.forEach(navLink => {
-               if(navLink.getAttribute('data-section-id') === sectionId){
-                    navLink.classList.add('is-active');
-               }else{
-                    navLink.classList.remove('is-active');
-               }
-              });
+            if(navLink.getAttribute('data-section-id') === sectionId){
+                navLink.classList.add('is-active');
+            }else{
+                navLink.classList.remove('is-active');
+            }
+         });
     }
   }
 }
