@@ -47,7 +47,7 @@ let sectionId = '';
 // build the nav
 // TODO: think about performance when adding new elements to the DOM
 sections.forEach((section) => {
-    counter ++;
+  counter ++;
   const navItem = document.createElement('li');
   navItem.innerHTML = section.getAttribute('data-nav');
   navItem.classList.add('menu__link');
