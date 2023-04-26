@@ -28,6 +28,7 @@ const options = {
   threshold: 0.5
 };
 let counter = 0;
+let sectionId = '';
 
 /**
  * End Global Variables
@@ -106,17 +107,22 @@ menuItems.forEach(item => {
 // Set sections as active
 
 // Add class 'active' to section when it is near top of viewport
+const navLinks = document.querySelectorAll('.menu__link');
 function makeActive() {
   for (const section of sections) {
     const box = section.getBoundingClientRect();
     // You can play with the values in the "if" condition to further make it more accurate.
     if (box.top <= 150 && box.bottom >= 150) {
+
       // Apply active state on the current section and the corresponding Nav link.
-      const sectionId = section.getAttribute('id');
-      const navElement = document.querySelector(`[data-section-id="${sectionId}"]`);
-      navElement.classList.add('is-active');
-    } else {
-      // Remove active state from other section and corresponding Nav link.
+      sectionId = section.getAttribute('id');
+         navLinks.forEach(navLink => {
+               if(navLink.getAttribute('data-section-id') === sectionId){
+                    navLink.classList.add('is-active');
+               }else{
+                    navLink.classList.remove('is-active');
+               }
+              });
     }
   }
 }
