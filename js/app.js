@@ -36,78 +36,55 @@ let sectionId = '';
  * 
 */
 
-
-
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
-
-// build the nav
-// TODO: think about performance when adding new elements to the DOM
-sections.forEach((section) => {
-  counter ++;
-  const navItem = document.createElement('li');
-  navItem.innerHTML = section.getAttribute('data-nav');
-  navItem.classList.add('menu__link');
-  navItem.setAttribute('data-section-id', `section${counter}`);
-  navMenu.appendChild(navItem);
-});
-
-// Add class 'active' to section when near top of viewport
-
-const callback = (entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-active');
-    } else {
-      entry.target.classList.remove('is-active');
-    }
+function buildNavigationForThePage() {
+  sections.forEach((section) => {
+    counter ++;
+    const navItem = document.createElement('li');
+    navItem.innerHTML = section.getAttribute('data-nav');
+    navItem.classList.add('menu__link');
+    navItem.setAttribute('data-section-id', `section${counter}`);
+    navMenu.appendChild(navItem);
   });
-};
+}
 
-const observer = new IntersectionObserver(callback, options);
+function addClassActiveToSections(){
+  const callback = (entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-active');
+      } else {
+        entry.target.classList.remove('is-active');
+      }
+    });
+  };
+  
+  const observer = new IntersectionObserver(callback, options);
+  
+  sections.forEach(section => {
+    observer.observe(section);
+  });
+}
 
-sections.forEach(section => {
-  observer.observe(section);
-});
-
-
-// Scroll to anchor ID using scrollTO event
-
-// Step 1: Listen for click events on the navigation menu items
+function scrollToAnchorId() {
 const menuItems = document.querySelectorAll('.menu__link');
+
 menuItems.forEach(item => {
   item.addEventListener('click', event => {
-    // Step 2: Prevent the default link behavior
+    //Prevent the default link behavior
     event.preventDefault();
 
-    // Step 3: Get the ID of the section to scroll to
+    //Get the ID of the section to scroll to
     const sectionId = item.getAttribute('data-section-id');
 
-    // Step 4: Scroll to the section
+    //Scroll to the section
     const section = document.getElementById(sectionId);
     section.scrollIntoView({ behavior: 'smooth' });
   });
 });
+}
 
-
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
-
-// Add class 'active' to section when it is near top of viewport
-const navLinks = document.querySelectorAll('.menu__link');
+function addRemoveClassActiveToNavigation() {
+  const navLinks = document.querySelectorAll('.menu__link');
 function makeActive() {
   for (const section of sections) {
     const box = section.getBoundingClientRect();
@@ -131,3 +108,37 @@ function makeActive() {
 document.addEventListener("scroll", function() {
   makeActive();
 });
+}
+
+/**
+ * End Helper Functions
+ * Begin Main Functions
+ * 
+*/
+
+// build the nav
+buildNavigationForThePage(sections);
+
+// Add class 'active' to section when near top of viewport
+addClassActiveToSections();
+
+// Scroll to anchor ID using scrollTO event
+scrollToAnchorId();
+
+// Show active navigation item while scrolling
+addRemoveClassActiveToNavigation();
+
+/**
+ * End Main Functions
+ * Begin Events
+ * 
+*/
+
+// Build menu 
+
+// Scroll to section on link click
+
+// Set sections as active
+
+// Add class 'active' to section when it is near top of viewport
+
