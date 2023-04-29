@@ -13,10 +13,6 @@
  * 
 */
 
-/**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
-*/
 
 /**
  * Define Global Variables
@@ -27,6 +23,7 @@ const navMenu = document.querySelector('#navbar__list');
 const options = {
   threshold: 0.5
 };
+const scrollToTopButton = document.getElementById('scroll-to-top');
 let counter = 0;
 let sectionId = '';
 
@@ -36,6 +33,11 @@ let sectionId = '';
  * 
 */
 
+/**
+ * function that builds the navigation menu items using the data-nav 
+ * attribute found in each section element
+ * 
+*/
 function buildNavigationForThePage() {
   sections.forEach((section) => {
     counter ++;
@@ -47,6 +49,11 @@ function buildNavigationForThePage() {
   });
 }
 
+/**
+ * Function that adds active class animation for the section that is in the 
+ * viewport
+ * 
+*/
 function addClassActiveToSections(){
   const callback = (entries, observer) => {
     entries.forEach(entry => {
@@ -65,6 +72,11 @@ function addClassActiveToSections(){
   });
 }
 
+/**
+ * function that listens on click events for each menu item in navigation
+ * and on click smoothly scrolls to the section
+ * 
+*/
 function scrollToAnchorId() {
 const menuItems = document.querySelectorAll('.menu__link');
 
@@ -83,40 +95,59 @@ menuItems.forEach(item => {
 });
 }
 
-function addRemoveClassActiveToNavigation() {
-  const navLinks = document.querySelectorAll('.menu__link');
-function makeActive() {
-  for (const section of sections) {
-    const box = section.getBoundingClientRect();
-    // You can play with the values in the "if" condition to further make it more accurate.
-    if (box.top <= 150 && box.bottom >= 150) {
-
-      // Apply active state on the current section and the corresponding Nav link.
-      sectionId = section.getAttribute('id');
-         navLinks.forEach(navLink => {
-            if(navLink.getAttribute('data-section-id') === sectionId){
-                navLink.classList.add('is-active');
-            }else{
-                navLink.classList.remove('is-active');
-            }
-         });
-    }
-  }
-}
-
-// Make sections active
-document.addEventListener("scroll", function() {
-  makeActive();
-});
-}
-
 /**
- * End Helper Functions
- * Begin Main Functions
+ * function that adds active state on the menu item for the section that is
+ * active and removes the active state from all other menu items when user 
+ * scrolls
  * 
 */
+function addRemoveClassActiveToNavigation() {
+  const navLinks = document.querySelectorAll('.menu__link');
+  function makeActive() {
+    for (const section of sections) {
+      const box = section.getBoundingClientRect();
+      
+      if (box.top <= 150 && box.bottom >= 150) {
 
-// build the nav
+        // Apply active state on the current section and the corresponding Nav link.
+        sectionId = section.getAttribute('id');
+          navLinks.forEach(navLink => {
+              if(navLink.getAttribute('data-section-id') === sectionId){
+                  navLink.classList.add('is-active');
+              }else{
+                  navLink.classList.remove('is-active');
+              }
+          });
+      }
+    }
+  }
+
+  /**
+   * function that adds a arrow button in the bottom right corner when user 
+   * scrolls below the fold of the page
+   * 
+  */
+  function addScrollToTheTopButton() {
+  
+      if (window.scrollY > window.innerHeight) {
+        scrollToTopButton.style.display = 'block';
+      } else {
+        scrollToTopButton.style.display = 'none';
+      }
+  
+  } 
+
+  /**
+   * function that adds a scroll event listener 
+   * 
+  */
+  document.addEventListener("scroll", function() {
+    makeActive();
+    addScrollToTheTopButton()
+  });
+}
+
+// build the nav from the sections
 buildNavigationForThePage(sections);
 
 // Add class 'active' to section when near top of viewport
@@ -125,20 +156,16 @@ addClassActiveToSections();
 // Scroll to anchor ID using scrollTO event
 scrollToAnchorId();
 
-// Show active navigation item while scrolling
+// Show menu item for section that is active
 addRemoveClassActiveToNavigation();
 
+
 /**
- * End Main Functions
- * Begin Events
- * 
+ * Adds an event listener to the scroll to the top button
 */
-
-// Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
-
-// Add class 'active' to section when it is near top of viewport
-
+scrollToTopButton.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
