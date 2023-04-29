@@ -16,7 +16,9 @@ Installation is not required. The project structure can be cloned from [here](ht
 ## Usage
 Users can navigate through each section of the landing page using top right navigation. The user can scroll smoothly to the related section by clicking the top navigation section menu item. 
 
-While scrollin the landing page, the menus on top navigation are highlight automatically to show users which section they're seeing on the screen. In addition to that, is the visible section highlighted using animation.
+While scrolling the landing page, the menus on top navigation are highlight automatically to show users which section they're seeing on the screen. In addition to that, is the visible section highlighted using animation.
+
+When a user scrolls below the fold of the page an arrow appears in the right bottom corner of the page. By clicking on this buttom the page scrolls smoothly to the top.
 
 
 ## Development
